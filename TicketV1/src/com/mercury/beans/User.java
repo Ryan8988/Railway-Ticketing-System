@@ -1,5 +1,9 @@
 package com.mercury.beans;
 
+import org.hibernate.annotations.Entity;
+
+@Entity
+
 public class User {
 	private int userId;
 	private String userName;
