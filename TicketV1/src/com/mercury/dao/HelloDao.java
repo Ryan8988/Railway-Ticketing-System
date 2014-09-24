@@ -2,12 +2,12 @@ package com.mercury.dao;
 
 import java.util.List;
 
-import com.mercury.beans.Ticket;
+import com.mercury.beans.Station;
 
 public interface HelloDao {
-	public Ticket findByName(String name);
-	public void save(Ticket ticket);
-	public void update(Ticket ticket);
-	public void delete(Ticket ticket);
-	public List<Ticket> queryAll();
+	public Station findByName(String name);
+	public void save(Station station);
+	public void update(Station station);
+	public void delete(Station station);
+	public List<Station> queryAll();
 }
