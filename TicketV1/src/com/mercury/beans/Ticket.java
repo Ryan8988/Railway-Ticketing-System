@@ -1,15 +1,26 @@
 package com.mercury.beans;
-
+import javax.persistence.*;
 import java.sql.Timestamp;
-
+@Entity
+@Table(name="Ticket")
 public class Ticket {
+	@Id
+	@GeneratedValue
+	@Column(name="ticket_id")
 	private int id;
+	@Column(name="type")
 	private String type;
+	@Column(name="origin")
 	private String origin;
+	@Column(name="destination")
 	private String destination;
+	@Column(name="depart_time")
 	private Timestamp depart_time;
+	@Column(name="arrive_time")
 	private Timestamp arrive_time;
+	@Column(name="price")
 	private int price;
+	@Column(name="quantity")
 	private int quantity;
 	public Ticket(){}
 	public Ticket(int id,String type,String origin,String destination,Timestamp depart_time,

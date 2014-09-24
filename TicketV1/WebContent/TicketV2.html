@@ -1,36 +1,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Sample13 GUI</title>
+<title>TicketV2</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
 <script>
 angular.module("mainModule", [])
 	.controller("mainController", function ($scope, $http) {
-		$scope.person = {
+  		$scope.station = {
   			name: "",
-  			age: ""
+  			st_id: "",
+  			city: "",
+  			state: ""
   		};
   		$scope.users = [];
   		$scope.welcomeMsg = null;
   		$scope.canShow = false;
-  		var oriPerson = angular.copy($scope.person);
+  		
+  		var oristation = angular.copy($scope.station);
 
   	    $scope.resetForm = function () {
-  	      	$scope.person = angular.copy(oriPerson);
+  	      	$scope.station = angular.copy(oristation);
   	      	$scope.userForm.$setPristine();
   	      	$scope.canShow = false;
   	    };
 
-  	    $scope.isPersonChanged = function () {
-  	      	return !angular.equals($scope.person, oriPerson);
+  	    $scope.isstationChanged = function () {
+  	      	return !angular.equals($scope.station, oristation);
   	    };
   	    
-  		$scope.submitData = function (person, resultVarName) {
+  		$scope.submitData = function (station, resultVarName) {
 		    var params = $.param({
-	        	name: person.type,
-	        	age: person.price
+	        	name: station.name,
+	        	st_id: station.st_id,
+	        	city: station.city,
+	        	state: station.state
 		    });
     		$http({
     			method: "POST",
@@ -39,7 +44,7 @@ angular.module("mainModule", [])
     			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     		}).success(function (data, status, headers, config) {
         		$scope[resultVarName] = data;
-        		$scope.users = data.ticket;
+        		$scope.users = data.station;
         		$scope.welcomeMsg = data.msg;
         		$scope.canShow = true;
       		}) .error(function (data, status, headers, config) {
@@ -47,8 +52,7 @@ angular.module("mainModule", [])
       		});
   		};
 	});	
-</script>  		
-  		
+</script>
 <style>
 	textarea {
 	    width: 300px;
@@ -57,21 +61,30 @@ angular.module("mainModule", [])
 </style>
 </head>
 <body ng-app="mainModule">
+<h2><font color="green">TicketV1: AngularJS + REST ~ Spring ~ JDBC</font></h2>
 <div ng-controller="mainController">
-	<form name="userForm" ng-submit="submitData(person, 'ajaxResult')" novalidate>
+	<form name="userForm" ng-submit="submitData(station, 'ajaxResult')" novalidate>
 		<table>
 			<tr>
-				<td><label for="type">Type: </label></td>
-				<td><input id="type" type="text" name="type" ng-model="person.type" required/></td>
+				<td><label for="name">Name: </label></td>
+				<td><input id="name" type="text" name="name" ng-model="station.name" required/></td>
 			</tr>
 			<tr>
-				<td><label for="price">Price: </label></td>
-				<td><input id="price" type="number" name="price" ng-model="person.price" min="1" max="100"/></td>
+				<td><label for="st_id">st_id: </label></td>
+				<td><input id="st_id" type="number" name="st_id" ng-model="station.st_id" min="1" max="100"/></td>
+			</tr>
+			<tr>
+				<td><label for="city">city: </label></td>
+				<td><input id="city" type="text" name="city" ng-model="station.city" required/></td>
+			</tr>
+			<tr>
+				<td><label for="state">state: </label></td>
+				<td><input id="state" type="text" name="state" ng-model="station.state" required/></td>
 			</tr>
 			<tr>
 				<td></td>
 				<td>
-					<button type="button" ng-click="resetForm()" ng-disabled="!isPersonChanged()">Reset</button>
+					<button type="button" ng-click="resetForm()" ng-disabled="!isstationChanged()">Reset</button>
 					<button type="submit" ng-disabled="userForm.$invalid">Submit</button>
 				</td>
 			</tr>
@@ -80,18 +93,22 @@ angular.module("mainModule", [])
 	
     <br />
     <div ng-show="canShow">
-		<h2><font color="green" id="welcome">{{welcomeMsg}}</font></h2>
+		<h2><font color="green" id="welcome">{{welcomeMsg}}</font></h2> 
 		<table border="1" width="200">
 			<thead>
         		<tr>
-		          <th>Type</th>
-		          <th>Price</th>
+		          <th>Name</th>
+		          <th>st_id</th>
+		          <th>city</th>
+		          <th>state</th>
         		</tr>
       		</thead>
       		<tbody>
-        		<tr ng-repeat="ticket in users">
-          			<td>{{ticket.type}}</td>
-          			<td>{{ticket.price}}</td>
+        		<tr ng-repeat="user in users">
+          			<td>{{user.name}}</td>
+          			<td>{{user.st_id}}</td>
+          			<td>{{user.city}}</td>
+          			<td>{{user.state}}</td>
         		</tr>
       		</tbody>
 		</table>
