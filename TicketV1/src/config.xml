@@ -27,6 +27,8 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.mercury.beans.Station</value>
+				<value>com.mercury.beans.Users</value>
+				<value>com.mercury.beans.Card</value>
 			</list>
     	</property>
 		<property name="hibernateProperties">
