@@ -28,28 +28,28 @@ public class HelloResource {
 		}
 	}
 
-	@POST
-	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public StationInfo execute(
-			@FormParam("name") String name,
-			@FormParam("st_id") int st_id,
-			@FormParam("city") String city,
-			@FormParam("state") String state){
-		Station station = new Station();
-		
-		station.setName(name);
-		station.setSt_id(st_id);
-		station.setCity(city);
-		station.setState(state);
-
-//		StationInfo stationInfo = new StationInfo();
-//		List<Station> list=new ArrayList<Station>();
-//		list.add(station);
-//		list.add(station);
-//		stationInfo.setStations(list);
-//		stationInfo.setMsg("Hi");
+//	@POST
+//	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//	public StationInfo execute(
+//			@FormParam("name") String name,
+//			@FormParam("st_id") int st_id,
+//			@FormParam("city") String city,
+//			@FormParam("state") String state){
+//		Station station = new Station();
 //		
-//		return stationInfo;
-		return hs.process(station);
-	}
+//		station.setStationName(name);
+//		station.setStationId(st_id);
+//		station.setCity(city);
+//		station.setState(state);
+//
+////		StationInfo stationInfo = new StationInfo();
+////		List<Station> list=new ArrayList<Station>();
+////		list.add(station);
+////		list.add(station);
+////		stationInfo.setStations(list);
+////		stationInfo.setMsg("Hi");
+////		
+////		return stationInfo;
+//		return hs.process(station);
+//	}
 }

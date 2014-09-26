@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>users</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
+<script>
+angular.module("mainModule", [])
+	.controller("mainController", function ($scope, $http) {
+  		$scope.userBean = {
+  			user_id: "",
+  			username: "",
+  			password: "",
+  			first_name: "",
+  			last_name: "",
+  			email: "",
+  			address: "",
+  			authority: "",
+  			enabled: ""
+  		};
+  		$scope.users = [];
+  		$scope.welcomeMsg = null;
+  		$scope.canShow = false;
+  		
+  		var oriuserBean = angular.copy($scope.userBean);
+
+  	    $scope.resetForm = function () {
+  	      	$scope.userBean = angular.copy(oriuserBean);
+  	      	$scope.userForm.$setPristine();
+  	      	$scope.canShow = false;
+  	    };
+
+  	    $scope.isuserBeanChanged = function () {
+  	      	return !angular.equals($scope.userBean, oriuserBean);
+  	    };
+  	    
+  		$scope.submitData = function (userBean, resultVarName) {
+		    var params = $.param({
+	        	user_id: userBean.user_id,
+	        	username: userBean.username,
+	        	password: userBean.password,
+	        	first_name: userBean.first_name,
+	        	last_name: userBean.last_name,
+	        	email: userBean.email,
+	        	address: userBean.address,
+	        	authority: userBean.authority,
+	        	enabled: userBean.enabled
+		    });
+    		$http({
+    			method: "POST",
+    			url: "http://localhost:8080/TicketV1/rest/users",
+    			data: params,
+    			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    		}).success(function (data, status, headers, config) {
+        		$scope[resultVarName] = data;
+        		$scope.users = data.userBean;
+        		$scope.welcomeMsg = data.msg;
+        		$scope.canShow = true;
+      		}) .error(function (data, status, headers, config) {
+        		$scope[resultVarName] = "SUBMIT ERROR";
+      		});
+  		};
+	});	
+</script>
+<style>
+	textarea {
+	    width: 300px;
+	    height: 80px;
+    }
+</style>
+</head>
+<body ng-app="mainModule">
+<h2><font color="green">Users</font></h2>
+<div ng-controller="mainController">
+	<form name="userForm" ng-submit="submitData(userBean, 'ajaxResult')" novalidate>
+		<table>
+			<tr>
+				<td><label for="user_id">user_id: </label></td>
+				<td><input id="user_id" type="number" name="user_id" ng-model="userBean.user_id" min="1" max="100"/></td>
+			</tr>
+			<tr>
+				<td><label for="username">username: </label></td>
+				<td><input id="username" type="text" name="username" ng-model="userBean.username" required/></td>
+			</tr>
+			<tr>
+				<td><label for="password">password: </label></td>
+				<td><input id="password" type="text" name="password" ng-model="userBean.password" required/></td>
+			</tr>
+			<tr>
+				<td><label for="first_name">first_name: </label></td>
+				<td><input id="first_name" type="text" name="first_name" ng-model="userBean.first_name" required/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<button type="button" ng-click="resetForm()" ng-disabled="!isuserBeanChanged()">Reset</button>
+					<button type="submit" ng-disabled="userForm.$invalid">Submit</button>
+				</td>
+			</tr>
+		</table>	
+	</form>
+	
+    <br />
+    <div ng-show="canShow">
+		<h2><font color="green" id="welcome">{{welcomeMsg}}</font></h2> 
+		<table border="1" width="200">
+			<thead>
+        		<tr>
+		          <th>user_id</th>
+		          <th>username</th>
+		          <th>password</th>
+		          <th>first_name</th>
+        		</tr>
+      		</thead>
+      		<tbody>
+        		<tr ng-repeat="user in users">
+          			<td>{{user.user_id}}</td>
+          			<td>{{user.username}}</td>
+          			<td>{{user.password}}</td>
+          			<td>{{user.first_name}}</td>
+        		</tr>
+      		</tbody>
+		</table>
+	</div>	  
+</div>
+	
+</body>
+</html>

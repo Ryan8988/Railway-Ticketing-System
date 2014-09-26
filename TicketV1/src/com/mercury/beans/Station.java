@@ -1,50 +1,56 @@
 package com.mercury.beans;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="station")
+@Table(name="Station")
 public class Station {
-	@Id
-	@Column(name="station_name")
-	private String name;
-	@Column(name="station_id")
-	private int st_id;
-	@Column(name="city")
+	private int stationId;
+	private String stationName;
 	private String city;
-	@Column(name="state")
 	private String state;
-	public Station(){};
-	public Station(String name,int st_id,String city,String state){
-		this.name=name;
-		this.st_id=st_id;
-		this.city=city;
-		this.state=state;
+	
+	public Station(){}
+	public Station(String stationName, String city,String state){
+		this.stationName = stationName;
+		this.city = city;
+		this.state =state;
 	}
-	public String getName() {
-		return name;
+	@Id
+	@GenericGenerator(name="generator",strategy="increment")
+	@GeneratedValue(generator="generator")
+	@Column(name="station_id",unique=true,nullable=false)
+	public int getStationId() {
+		return stationId;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setStationId(int stationId) {
+		this.stationId = stationId;
 	}
-	public int getSt_id() {
-		return st_id;
+	@Column(name="station_name")
+	public String getStationName() {
+		return stationName;
 	}
-	public void setSt_id(int st_id) {
-		this.st_id = st_id;
+	public void setStationName(String stationName) {
+		this.stationName = stationName;
 	}
+	@Column(name="city")
 	public String getCity() {
 		return city;
 	}
 	public void setCity(String city) {
 		this.city = city;
 	}
+	@Column(name="state")
 	public String getState() {
 		return state;
 	}
 	public void setState(String state) {
 		this.state = state;
 	}
-	
 }

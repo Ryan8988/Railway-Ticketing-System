@@ -18,8 +18,12 @@
     	<property name="hs" ref="helloService"/>
     	<property name="viewPage" value="result"/>
     </bean>  -->
-    <bean id="helloService" class="com.mercury.service.HelloService" autowire="byType"/>
+<!--     <bean id="helloService" class="com.mercury.service.HelloService" autowire="byType"/>
     <bean id="helloDao" class="com.mercury.dao.impl.HelloDaoImpl">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+    </bean> -->
+    <bean id="stationService" class="com.mercury.service.StationService" autowire="byName"/>
+    <bean id="staDao" class="com.mercury.dao.impl.StationDaoImpl">
     	<property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"> 
@@ -27,8 +31,8 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.mercury.beans.Station</value>
-				<value>com.mercury.beans.Users</value>
-				<value>com.mercury.beans.Card</value>
+<!-- 				<value>com.mercury.beans.Users</value>
+				<value>com.mercury.beans.Card</value> -->
 			</list>
     	</property>
 		<property name="hibernateProperties">
