@@ -4,45 +4,44 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import com.mercury.beans.Station;
+import com.mercury.dao.StationDao;
 
-import com.mercury.beans.Card;
-import com.mercury.beans.Users;
-import com.mercury.dao.HelloDao;
-
-public class HelloDaoImpl implements HelloDao {
+public class StationImpl implements StationDao {
 	private HibernateTemplate template;
 	public void setSessionFactory(SessionFactory sessionFactory){
 		template = new HibernateTemplate(sessionFactory);
 	}
 	@Override
-	public void save(Users users) {
+	public void save(Station station) {
 		// TODO Auto-generated method stub
-		template.save(users);
+		template.save(station);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Users> usersQuery() {
+	public List<Station> query() {
 		// TODO Auto-generated method stub
-		String hql="from Users";
+		String hql="from Station";
 		return template.find(hql);
 	}
 
 	@Override
-	public void delete(Users users) {
+	public void delete(Station station) {
 		// TODO Auto-generated method stub
-		template.delete(users);
+		template.delete(station);
 	}
 
 	@Override
-	public void update(Users users) {
+	public void update(Station station) {
 		// TODO Auto-generated method stub
-		template.update(users);
+		template.update(station);
 	}
 
 	@Override
-	public Users findByUserName(String name) {
+	public Station findByStationName(String stationName) {
 		// TODO Auto-generated method stub
-		return (Users)template.load(Users.class, name);
+		return (Station)template.load(Station.class, stationName);
 	}
+
 }

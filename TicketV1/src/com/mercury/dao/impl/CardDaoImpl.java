@@ -6,43 +6,43 @@ import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.mercury.beans.Card;
-import com.mercury.beans.Users;
-import com.mercury.dao.HelloDao;
+import com.mercury.dao.CardDao;
 
-public class HelloDaoImpl implements HelloDao {
+public class CardDaoImpl implements CardDao {
 	private HibernateTemplate template;
 	public void setSessionFactory(SessionFactory sessionFactory){
 		template = new HibernateTemplate(sessionFactory);
 	}
 	@Override
-	public void save(Users users) {
+	public void save(Card card) {
 		// TODO Auto-generated method stub
-		template.save(users);
+		template.save(card);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Users> usersQuery() {
+	public List<Card> cardQuery() {
 		// TODO Auto-generated method stub
-		String hql="from Users";
+		String hql="from Card";
 		return template.find(hql);
 	}
 
 	@Override
-	public void delete(Users users) {
+	public void delete(Card card) {
 		// TODO Auto-generated method stub
-		template.delete(users);
+		template.delete(card);
 	}
 
 	@Override
-	public void update(Users users) {
+	public void update(Card card) {
 		// TODO Auto-generated method stub
-		template.update(users);
+		template.update(card);
 	}
 
 	@Override
-	public Users findByUserName(String name) {
+	public Card findByCardNum(int number) {
 		// TODO Auto-generated method stub
-		return (Users)template.load(Users.class, name);
+		return (Card)template.load(Card.class, number);
 	}
+
 }

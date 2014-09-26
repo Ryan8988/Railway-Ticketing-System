@@ -5,44 +5,38 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-import com.mercury.beans.Card;
-import com.mercury.beans.Users;
-import com.mercury.dao.HelloDao;
+import com.mercury.beans.Ticket;
+import com.mercury.dao.TicketDao;
 
-public class HelloDaoImpl implements HelloDao {
+public class TicketDaoImpl implements TicketDao {
 	private HibernateTemplate template;
 	public void setSessionFactory(SessionFactory sessionFactory){
 		template = new HibernateTemplate(sessionFactory);
 	}
 	@Override
-	public void save(Users users) {
+	public void save(Ticket ticket) {
 		// TODO Auto-generated method stub
-		template.save(users);
+		template.save(ticket);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Users> usersQuery() {
+	public List<Ticket> query() {
 		// TODO Auto-generated method stub
-		String hql="from Users";
+		String hql="from Ticket";
 		return template.find(hql);
 	}
 
 	@Override
-	public void delete(Users users) {
+	public void delete(Ticket ticket) {
 		// TODO Auto-generated method stub
-		template.delete(users);
+		template.delete(ticket);
 	}
 
 	@Override
-	public void update(Users users) {
+	public void update(Ticket ticket) {
 		// TODO Auto-generated method stub
-		template.update(users);
+		template.update(ticket);
 	}
 
-	@Override
-	public Users findByUserName(String name) {
-		// TODO Auto-generated method stub
-		return (Users)template.load(Users.class, name);
-	}
 }
