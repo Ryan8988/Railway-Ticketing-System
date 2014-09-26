@@ -1,61 +1,60 @@
 package com.mercury.beans;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
-
 @Entity
-@Table(name = "card")
+@Table(name="card")
 public class Card {
-	private int card_number;
+	private int cardId;
 	private Users users;
-	private int expire_month;
-	private int expire_year;
+	private int month;
+	private int year;
 	private int csc;
 	private String type;
+	
 	public Card(){}
-	public Card(int card_number,Users users,int expire_month,int expire_year,int csc,String type){
-		this.card_number=card_number;
-		this.users=users;
-		this.expire_month=expire_month;
-		this.expire_year=expire_year;
-		this.csc=csc;
-		this.type=type;
-		
+	public Card(int number,Users users, int month,int year,int csc,String type){
+		this.cardId = number;
+		this.users = users;
+		this.month = month;
+		this.year = year;
+		this.csc = csc;
+		this.type = type;
 	}
-	@Id
-	@Column(name="card_number")
-	public int getCard_number() {
-		return card_number;
+	@Id	
+	@Column(name="card_number",unique=true,nullable=false)
+	public int getCardId() {
+		return cardId;
 	}
-	public void setCard_number(int card_number) {
-		this.card_number = card_number;
+	public void setCardId(int cardId) {
+		this.cardId = cardId;
 	}
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="user_id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id",nullable=false)
 	public Users getUsers() {
 		return users;
 	}
 	public void setUsers(Users users) {
 		this.users = users;
 	}
+		
 	@Column(name="expire_month")
-	public int getExpire_month() {
-		return expire_month;
+	public int getMonth() {
+		return month;
 	}
-	public void setExpire_month(int expire_month) {
-		this.expire_month = expire_month;
+	public void setMonth(int month) {
+		this.month = month;
 	}
 	@Column(name="expire_year")
-	public int getExpire_year() {
-		return expire_year;
+	public int getYear() {
+		return year;
 	}
-	public void setExpire_year(int expire_year) {
-		this.expire_year = expire_year;
+	public void setYear(int year) {
+		this.year = year;
 	}
 	@Column(name="csc")
 	public int getCsc() {
@@ -64,13 +63,11 @@ public class Card {
 	public void setCsc(int csc) {
 		this.csc = csc;
 	}
-	@Column(name="type")
+	@Column(name="Type")
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-
 }

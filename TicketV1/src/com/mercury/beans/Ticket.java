@@ -1,90 +1,109 @@
 package com.mercury.beans;
-import javax.persistence.*;
+
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+import com.mercury.beans.Transactions;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 @Entity
-@Table(name="Ticket")
+@Table(name="ticket")
 public class Ticket {
-	@Id
-	@GeneratedValue
-	@Column(name="ticket_id")
-	private int id;
-	@Column(name="type")
+	private int ticketId;
 	private String type;
-	@Column(name="origin")
-	private String origin;
-	@Column(name="destination")
-	private String destination;
-	@Column(name="depart_time")
-	private Timestamp depart_time;
-	@Column(name="arrive_time")
-	private Timestamp arrive_time;
-	@Column(name="price")
-	private int price;
-	@Column(name="quantity")
+	private Timestamp departTime;
+	private Timestamp arriveTime;
+	private double price;
 	private int quantity;
+	private int origin;
+	private int destination;
+	private Set<Transactions>transactions = new HashSet<Transactions>();
 	public Ticket(){}
-	public Ticket(int id,String type,String origin,String destination,Timestamp depart_time,
-			Timestamp arrive_time,int price,int quantity){
-		this.id=id;
-		this.type=type;
-		this.origin=origin;
-		this.destination=destination;
-		this.depart_time=depart_time;
-		this.arrive_time=arrive_time;
-		this.price=price;
-		this.quantity=quantity;
+	public Ticket(String type,Timestamp departTime,Timestamp arriveTime, double price, int quantity,int origin,int destination){		
+		this.type = type;
+		this.departTime = departTime;
+		this.arriveTime = arriveTime;
+		this.price= price;
+		this.quantity = quantity;
+		this.origin = origin;
+		this.destination = destination;
+	}
+	@Id
+	@GenericGenerator(name="generator",strategy="increment")
+	@GeneratedValue(generator="generator")
+	@Column(name="ticket_id",unique=true,nullable=false)
+	public int getTicketId() {
+		return ticketId;
+	}
+	public void setTicketId(int ticketId) {
+		this.ticketId = ticketId;
 	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	@Column(name="type",nullable=false)
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getOrigin() {
-		return origin;
+	
+	@Column(name="depart_time")
+	public Timestamp getDepartTime() {
+		return departTime;
 	}
-	public void setOrigin(String origin) {
-		this.origin = origin;
+	public void setDepartTime(Timestamp departTime) {
+		this.departTime = departTime;
 	}
-	public String getDestination() {
-		return destination;
+	@Column(name="arrive_time")
+	public Timestamp getArriveTime() {
+		return arriveTime;
 	}
-	public void setDestination(String destination) {
-		this.destination = destination;
+	public void setArriveTime(Timestamp arriveTime) {
+		this.arriveTime = arriveTime;
 	}
-	public Timestamp getDepart_time() {
-		return depart_time;
-	}
-	public void setDepart_time(Timestamp depart_time) {
-		this.depart_time = depart_time;
-	}
-	public Timestamp getArrive_time() {
-		return arrive_time;
-	}
-	public void setArrive_time(Timestamp arrive_time) {
-		this.arrive_time = arrive_time;
-	}
-	public int getPrice() {
+	
+	@Column(name="price")
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
+	@Column(name="quantity")
 	public int getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	@Override
-	public String toString(){
-		return id+"\t"+type+"\t"+price;
+	@Column(name="origin")
+	public int getOrigin() {
+		return origin;
 	}
+	public void setOrigin(int origin) {
+		this.origin = origin;
+	}	
+	@Column(name="destination")
+	public int getDestination() {
+		return destination;
+	}
+	public void setDestination(int destination) {
+		this.destination = destination;
+	}
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="ticket")
+	public Set<Transactions> getTransactions() {
+		return transactions;
+	}
+	public void setTransactions(Set<Transactions> transactions) {
+		this.transactions = transactions;
+	}
+	
 }
